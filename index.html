@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Topics Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    h2 {
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .topic {
+      margin: 5px 0;
+    }
+    label {
+      cursor: pointer;
+    }
+    input[type="checkbox"]:checked + span {
+      text-decoration: line-through;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ Java Topics Tracker</h1>
+
+  <div id="container"></div>
+
+  <script>
+    const topics = {
+      "Beginner Level (Core Java Basics)": [
+        "Introduction to Java",
+        "Setup and Installation (JDK, IDEs)",
+        "Hello World Program",
+        "Java Syntax and Structure",
+        "Variables and Data Types",
+        "Operators (Arithmetic, Logical, Bitwise, etc.)",
+        "Input and Output (Scanner, BufferedReader)",
+        "Conditional Statements (if, else, switch)",
+        "Loops (for, while, do-while)",
+        "Arrays (1D & 2D)",
+        "String Handling (String, StringBuilder, StringBuffer)",
+        "Type Casting and Conversion",
+        "Methods and Parameters",
+        "Recursion",
+        "Java Naming Conventions"
+      ],
+      "Object-Oriented Programming (OOP)": [
+        "Classes and Objects",
+        "Constructors (Default, Parameterized, Copy)",
+        "this and super keyword",
+        "Inheritance (Single, Multilevel, Hierarchical)",
+        "Polymorphism (Compile-time & Runtime)",
+        "Method Overloading & Overriding",
+        "Abstraction (Abstract Classes)",
+        "Interfaces",
+        "Encapsulation",
+        "Access Modifiers (public, private, protected, default)",
+        "Static Keyword",
+        "final Keyword",
+        "Nested Classes and Inner Classes"
+      ],
+      "Intermediate Concepts": [
+        "Exception Handling (try-catch-finally, throws, throw)",
+        "Custom Exceptions",
+        "Packages & Import Statements",
+        "Java API Documentation",
+        "Enum in Java",
+        "Wrapper Classes",
+        "Autoboxing and Unboxing",
+        "Command-Line Arguments",
+        "Java Annotations",
+        "var Keyword (Java 10+)"
+      ],
+      "Collections Framework": [
+        "Collection Interface Overview",
+        "List (ArrayList, LinkedList)",
+        "Set (HashSet, LinkedHashSet, TreeSet)",
+        "Map (HashMap, LinkedHashMap, TreeMap)",
+        "Queue & Stack",
+        "Iterator & ListIterator",
+        "Comparable and Comparator",
+        "Collections Class (Utility Methods)",
+        "Streams (Java 8)"
+      ],
+      "Multithreading & Concurrency": [
+        "Thread Lifecycle",
+        "Creating Threads (Thread Class, Runnable Interface)",
+        "Thread Methods (sleep(), join(), yield(), etc.)",
+        "Synchronization",
+        "Inter-thread Communication",
+        "Executor Framework",
+        "Concurrency Utilities (CountDownLatch, Semaphore, etc.)"
+      ],
+      "File Handling & I/O": [
+        "File Class",
+        "Reading & Writing Files (FileReader, FileWriter, BufferedReader)",
+        "Serialization & Deserialization",
+        "Byte Streams vs Character Streams",
+        "Object Streams",
+        "NIO (New Input/Output)"
+      ],
+      "Advanced Java (JDBC + Networking + GUI)": [
+        "JDBC Introduction",
+        "Connecting to Database (MySQL, SQLite)",
+        "CRUD Operations using JDBC",
+        "PreparedStatement & CallableStatement",
+        "Transactions and Batch Processing",
+        "Networking (Socket Programming - TCP/UDP)",
+        "URL & HttpURLConnection",
+        "GUI Programming with Swing",
+        "Event Handling",
+        "JavaFX Basics (Optional, Newer GUI)"
+      ],
+      "Functional Programming (Java 8+)": [
+        "Lambda Expressions",
+        "Functional Interfaces",
+        "Method References",
+        "Streams API (map, filter, collect, reduce)",
+        "Optional Class",
+        "Default and Static Methods in Interfaces"
+      ],
+      "Best Practices & Advanced Concepts": [
+        "Design Patterns (Singleton, Factory, etc.)",
+        "Unit Testing with JUnit",
+        "Java Memory Management",
+        "Garbage Collection",
+        "JVM Internals",
+        "Reflection API",
+        "Generics (with Wildcards)",
+        "Custom ClassLoaders",
+        "Java Modules (Java 9+)",
+        "Performance Optimization",
+        "Clean Code Practices",
+        "Build Tools (Maven, Gradle)"
+      ],
+      "Java for Development & Frameworks (Optional)": [
+        "Java Servlets & JSP",
+        "Spring Framework (Core, MVC, Boot)",
+        "Hibernate ORM",
+        "REST API Development in Java",
+        "Microservices with Spring Boot",
+        "JWT and Spring Security",
+        "Docker with Java Apps",
+        "Deploying Java Applications (Heroku, AWS, etc.)"
+      ]
+    };
+
+    const container = document.getElementById("container");
+
+    for (const section in topics) {
+      const div = document.createElement("div");
+      div.className = "section";
+      const title = document.createElement("h2");
+      title.textContent = section;
+      div.appendChild(title);
+
+      topics[section].forEach((topic, index) => {
+        const id = `${section}-${index}`.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "topic";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = id;
+        checkbox.checked = localStorage.getItem(id) === "true";
+        checkbox.addEventListener("change", () => {
+          localStorage.setItem(id, checkbox.checked);
+        });
+
+        const label = document.createElement("label");
+        label.htmlFor = id;
+        const span = document.createElement("span");
+        span.textContent = ` ${topic}`;
+        label.appendChild(span);
+
+        wrapper.appendChild(checkbox);
+        wrapper.appendChild(label);
+
+        div.appendChild(wrapper);
+      });
+
+      container.appendChild(div);
+    }
+  </script>
+</body>
+</html>
